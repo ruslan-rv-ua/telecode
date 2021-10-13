@@ -1,7 +1,3 @@
-Application: Telecode
-Version: 0.2.0
-
-
 # Telecode
 
 Програма для демонстрації коду.
