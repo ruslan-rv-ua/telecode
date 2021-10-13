@@ -1,0 +1,7 @@
+remote_file_url: "http://ruslanrvua.hopto.org:8003/learn_code.py"
+files_folder: "../files"
+files_subfolder: ""
+local_file: "demo.py"
+editor_path: "notepad++/notepad++.exe" # editor
+poll_time: 2000 # miliseconds
+request_timeout: 3 # seconds

@@ -1,8 +1,8 @@
-Application: Demka
-Version: 0.1.1
+Application: Telecode
+Version: 0.2.0
 
 
-# Demka
+# Telecode
 
 Програма для демонстрації коду.
 

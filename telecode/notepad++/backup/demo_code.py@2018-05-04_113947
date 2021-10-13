@@ -1,0 +1,6 @@
+import requests
+import json
+url = 'https://blockchain.info/ticker'
+response = requests.get(url)
+data = json.loads(response.text)
+print(data['USD'])
