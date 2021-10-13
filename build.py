@@ -9,7 +9,6 @@ APP_NAME = project_data['tool']['poetry']['name']
 APP_VERSION = project_data['tool']['poetry']['version']
 APP_FOLDER = f'{APP_NAME}-{APP_VERSION}'
 
-
 build = py2winapp.build(
     python_version="3.9.7",
 	input_dir=f'{APP_NAME}',
@@ -21,9 +20,17 @@ build = py2winapp.build(
 
 build.rename_exe_file(APP_NAME)
 
-# make zip in `docs` folder
+# generate docs
+html_doc_file_path = make_html_docs(app_name=APP_NAME, app_version=APP_VERSION)
+# copy `docs/index.html` to app's folder as `docs.html`
+shutil.copyfile(src=html_doc_file_path, dst=build.source_subdir_path / 'docs.html')
+
+# remove all `*.zip` in `docs` folder
+for file in (build.project_dir_path / 'docs').rglob('*.zip'):
+	file.unlink()
+# make zip distribution in `docs` folder
 build.make_zip(file_name=APP_FOLDER, destination_dir=build.project_dir_path / 'docs')
 
-# generate docs, copy to app's folder
-html_doc_file_path = make_html_docs(app_name=APP_NAME, app_version=APP_VERSION)
-shutil.copyfile(src=html_doc_file_path, dst=build.source_subdir_path / 'docs.html')
+# ...and delete app folder!
+shutil.rmtree(build.app_dir_path)
+
