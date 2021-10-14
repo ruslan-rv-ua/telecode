@@ -6,12 +6,8 @@ from datetime import datetime, time
 from pathlib import Path
 from urllib.request import urlopen
 
+import toml
 import wx
-import yaml
-try:
-    from yaml import CLoader as Loader
-except ImportError:
-    from yaml import Loader
 
 # begin wxGlade: dependencies
 # end wxGlade
@@ -19,13 +15,13 @@ except ImportError:
 # begin wxGlade: extracode
 # end wxGlade
 
-CONFIG_FILE_NAME = 'settings.yaml'
-DOCS_FILE = 'docs.html'
+SETTINGS_FILE_NAME = 'settings'
 INTRO_SOUND_FILE = 'intro.wav'
 UPDATE_SOUND_FILE = 'update.wav'
 
 APP_NAME = 'Telecode'
 APP_PATH = Path(__file__).parent
+APP_HOMEPAGE_URL='http://ruslan.rv.ua/telecode/'
 
 with open(APP_PATH / UPDATE_SOUND_FILE, mode='rb') as f:
     UPDATE_SOUND = f.read()
@@ -92,46 +88,48 @@ class MainFrame(wx.Frame):
     def start_timer(self):
         self.last_update_time = datetime.now()
         self.last_content = ''
-        self.timer.Start(self.settings.get('poll_time'))
+        self.timer.Start(self.settings['remote']['poll_time'])
 
     def stop_timer(self):
         self.timer.Stop()
 
     def load_settings(self):
-
         # play wellcome sound
         intro_path = APP_PATH / INTRO_SOUND_FILE
         winsound.PlaySound(str(intro_path), winsound.SND_ASYNC)
 
-        settings_file_path = APP_PATH / CONFIG_FILE_NAME
+        # settings file may be in app's dir or one level up
+        settings_file_path = APP_PATH / SETTINGS_FILE_NAME
         if not settings_file_path.exists():
-            wx.MessageBox('Відсутній файл конфігурації. Роботу програми буде припинено', caption='Помилка', style=wx.OK|wx.ICON_ERROR)
-            wx.Exit()
+            settings_file_path = APP_PATH / '..' / SETTINGS_FILE_NAME
+            if not settings_file_path.exists():
+                wx.MessageBox('Відсутній файл конфігурації. Роботу програми буде припинено', caption='Помилка', style=wx.OK|wx.ICON_ERROR)
+                wx.Exit()
         with settings_file_path.open(mode='r', encoding='utf8') as settings_file:
             try:
-                self.settings = yaml.load(settings_file, Loader=Loader)
+                self.settings = toml.load(settings_file)
             except Exception as e:
                 wx.MessageBox('Невірний файл конфігурації. Роботу програми буде припинено\n' + str(e), caption='Помилка', style=wx.OK|wx.ICON_ERROR)
                 self.settings = None
                 wx.Exit()
         
-        files_dir_path = APP_PATH / self.settings.get('files_folder')
+        files_dir_path = APP_PATH / self.settings['local']['folder']
         if not files_dir_path.exists():
             files_dir_path.mkdir()
         
-        local_dir_path = self.settings.get('files_subfolder')
+        local_dir_path = self.settings['local']['subfolder']
         self.local_dir_path = files_dir_path / local_dir_path
         if not self.local_dir_path.exists():
             self.local_dir_path.mkdir()
 
-        local_file = self.settings.get('local_file')
+        local_file = self.settings['local']['file']
         self.local_file_path = self.local_dir_path / local_file
         self.text_ctrl_file_path.SetValue(str(self.local_file_path))
 
 
     def get_remote_file(self):
         try:
-            with urlopen(self.settings.get('remote_file_url'), timeout=self.settings.get('request_timeout')) as response:
+            with urlopen(self.settings['remote']['file'], timeout=self.settings['remote']['request_timeout']) as response:
                 content = response.read()
         except Exception:
             return
@@ -162,7 +160,7 @@ class MainFrame(wx.Frame):
         self.SetTitle(f"{mins}:{secs:02d} — {APP_NAME}")
 
     def open_in_editor(self, event):  # wxGlade: MainFrame.<event_handler>
-        editor_path = Path(self.settings.get('editor_path'))
+        editor_path = Path(self.settings['editor']['path'])
         if not editor_path.is_absolute():
             editor_path = APP_PATH / editor_path
         subprocess.Popen([str(editor_path), str(self.local_file_path)])
@@ -183,8 +181,7 @@ class MainFrame(wx.Frame):
         event.Skip()
 
     def show_docs(self, event):  # wxGlade: MainFrame.<event_handler>
-        docs_html_file_path = APP_PATH / DOCS_FILE
-        webbrowser.open(str(docs_html_file_path))
+        webbrowser.open(APP_HOMEPAGE_URL)
         event.Skip()
 # end of class MainFrame
 

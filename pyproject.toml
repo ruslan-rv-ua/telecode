@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "telecode"
-version = "0.2.0"
+version = "0.1.0-rc.1"
 description = "Simple app for visually impaired students to recieve remote source code files."
 authors = ["Ruslan Iskov <ruslan.rv.ua@gmail.com>"]
 license = "MIT"
@@ -8,14 +8,14 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 wxPython = "^4.1.1"
-PyYAML = "^5.4.1"
+toml = "^0.10.2"
 
 [tool.poetry.dev-dependencies]
 Markdown = "^3.3.4"
-black = "^21.9b0"
 requests = "^2.26.0"
 gen-exe = "^0.2.1"
 toml = "^0.10.2"
+black = {version = "^21.9b0", allow-prereleases = true}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

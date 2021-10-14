@@ -1,7 +1,8 @@
-import py2winapp
 import shutil
+
 from toml import load
 
+import py2winapp
 from docs.make import make_html_docs
 
 project_data = load('pyproject.toml')
@@ -22,8 +23,9 @@ build.rename_exe_file(APP_NAME)
 
 # generate docs
 html_doc_file_path = make_html_docs(app_name=APP_NAME, app_version=APP_VERSION)
-# copy `docs/index.html` to app's folder as `docs.html`
-shutil.copyfile(src=html_doc_file_path, dst=build.source_subdir_path / 'docs.html')
+
+# move `settings` file to app's dir
+shutil.move(src=build.source_subdir_path / 'settings', dst=build.app_dir_path)
 
 # remove all `*.zip` in `docs` folder
 for file in (build.project_dir_path / 'docs').rglob('*.zip'):
