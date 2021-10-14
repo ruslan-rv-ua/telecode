@@ -18,7 +18,7 @@ From the installer:
 From the zip/7z package:
 	just unzip all the files into a directory you want then launch it.
 
-	
+
 Web sites:
 ***********
 

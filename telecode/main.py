@@ -48,7 +48,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.save_file_copy, self.button_save_copy)
         self.Bind(wx.EVT_BUTTON, self.show_docs, self.button_show_docs)
         # end wxGlade
-		
+
 		# timer
         self.timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.update, self.timer)
@@ -57,7 +57,7 @@ class MainFrame(wx.Frame):
         # begin wxGlade: MainFrame.__set_properties
         pass
         # end wxGlade
-		
+
 		# hack: include edit in tab order
         self.text_ctrl_file_path.AcceptsFocusFromKeyboard=lambda:True
         self.button_notification_sound.SetValue(True)
@@ -112,11 +112,11 @@ class MainFrame(wx.Frame):
                 wx.MessageBox('Невірний файл конфігурації. Роботу програми буде припинено\n' + str(e), caption='Помилка', style=wx.OK|wx.ICON_ERROR)
                 self.settings = None
                 wx.Exit()
-        
+
         files_dir_path = APP_PATH / self.settings['local']['folder']
         if not files_dir_path.exists():
             files_dir_path.mkdir()
-        
+
         local_dir_path = self.settings['local']['subfolder']
         self.local_dir_path = files_dir_path / local_dir_path
         if not self.local_dir_path.exists():
@@ -134,7 +134,7 @@ class MainFrame(wx.Frame):
         except Exception:
             return
         return content
-		
+
     def update(self, event):
         content = self.get_remote_file()
         if content is None:
@@ -169,7 +169,7 @@ class MainFrame(wx.Frame):
     def open_in_explorer(self, event):  # wxGlade: MainFrame.<event_handler>
         subprocess.Popen(['explorer.exe', str(self.local_dir_path)])
         event.Skip()
-        
+
     def save_file_copy(self, event):  # wxGlade: MainFrame.<event_handler>
         dlg = wx.TextEntryDialog(self, 'Назва файла:','Зберегти копію файла')
         date_str = datetime.now().strftime('_%H_%M_%S')

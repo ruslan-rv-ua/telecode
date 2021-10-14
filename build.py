@@ -35,4 +35,3 @@ build.make_zip(file_name=APP_FOLDER, destination_dir=build.project_dir_path / 'd
 
 # ...and delete app folder!
 shutil.rmtree(build.app_dir_path)
-

@@ -837,7 +837,7 @@
                     <Item id="6263" name="Без хмари"/>
                     <Item id="6267" name="Шлях до свого хмарного сховища:"/>
                 </Cloud>
-				
+
                 <SearchEngine title="Пошуковий засіб">
                     <Item id="6271" name="Пошуковий засіб (для команди &quot;Пошук в Інтернеті&quot;)"/>
                     <Item id="6272" name="DuckDuckGo"/>

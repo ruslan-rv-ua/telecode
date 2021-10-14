@@ -906,7 +906,7 @@
             <FileLockedWarning title="Сохранение не удалось" message="Пожалуйста, проверьте открыт ли этот файл в другом приложении."/>
             <FileAlreadyOpenedInNpp title="" message="Файл уже открыт в Notepad++."/>
             <DeleteFileFailed title="Удаление файла" message="Не удалось удалить файл"/>
-            
+
             <!-- $INT_REPLACE$ is a place holder, don't translate it -->
             <NbFileToOpenImportantWarning title="Очень большое количество файлов" message="$INT_REPLACE$ файла(ов) будут открыты.&#x0A;Продолжить?"/>
             <SettingsOnCloudError title="Параметры Облака" message="Похоже, что путь для облака указан на диск или папку с пометкой только для чтения.&#x0A;Вам необходимо открыть доступ или получить права на запись.&#x0A;Ваши параметры облака будут отменены. Пожалуйста сбросьте значение в окне Настройки..."/>

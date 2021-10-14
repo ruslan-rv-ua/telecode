@@ -8,8 +8,8 @@ http://docs.notepad-plus-plus.org/index.php/Context_Menu
 -->
 <NotepadPlus>
     <ScintillaContextMenu>
-		<!-- 
-		Use MenuEntryName and MenuItemName to localize your commands to add. 
+		<!--
+		Use MenuEntryName and MenuItemName to localize your commands to add.
 		The values should be in English but not in translated language.
 		(You can set Notepad++ language back to English from Preferences dialog via menu "Settings->Preferences...")
 		-->
@@ -19,14 +19,14 @@ http://docs.notepad-plus-plus.org/index.php/Context_Menu
         <Item MenuEntryName="Edit" MenuItemName="Delete"/>
         <Item MenuEntryName="Edit" MenuItemName="Select all"/>
         <Item MenuEntryName="Edit" MenuItemName="Begin/End Select"/>
-		
+
 		<!-- id="0" is the separator -->
         <Item id="0"/>
-		
-		<!-- You can use command id to add the commands you want. 
+
+		<!-- You can use command id to add the commands you want.
 		Check english.xml to get commands id:
 		https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/installer/nativeLang/english.xml
-		
+
 		Use FolderName (optional) to create sub-menu. FolderName can be used in any type of item.
 		FolderName value can be in any language.
 		-->
@@ -35,7 +35,7 @@ http://docs.notepad-plus-plus.org/index.php/Context_Menu
         <Item FolderName="Style token" id="43026"/>
         <Item FolderName="Style token" id="43028"/>
         <Item FolderName="Style token" id="43030"/>
-		
+
         <Item FolderName="Remove style" id="43023"/>
         <Item FolderName="Remove style" id="43025"/>
         <Item FolderName="Remove style" id="43027"/>
@@ -43,15 +43,15 @@ http://docs.notepad-plus-plus.org/index.php/Context_Menu
         <Item FolderName="Remove style" id="43031"/>
         <Item FolderName="Remove style" id="43032"/>
         <Item id="0"/>
-		
+
 		<!--
 		To add plugin commands, you have to use PluginEntryName and PluginCommandItemName to localize the plugin commands
 		-->
 		<Item FolderName="Plugin commands" PluginEntryName="MIME Tools" PluginCommandItemName="Base64 Encode" />
         <Item FolderName="Plugin commands" PluginEntryName="MIME Tools" PluginCommandItemName="Base64 Decode" />
-		
+
 		<!--
-		Use ItemNameAs (optional) to rename the menu item name in the context menu 
+		Use ItemNameAs (optional) to rename the menu item name in the context menu
 		ItemNameAs can be used in any type of item. ItemNameAs value can be in any language.
 		-->
         <Item FolderName="Plugin commands" PluginEntryName="NppExport" PluginCommandItemName="Copy all formats to clipboard" ItemNameAs="Copy Text with Syntax Highlighting" />

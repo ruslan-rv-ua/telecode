@@ -16,6 +16,7 @@ requests = "^2.26.0"
 gen-exe = "^0.2.1"
 toml = "^0.10.2"
 black = {version = "^21.9b0", allow-prereleases = true}
+pre-commit = "^2.15.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
