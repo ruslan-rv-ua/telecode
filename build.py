@@ -24,15 +24,25 @@ build.rename_exe_file(APP_NAME)
 # generate docs
 html_doc_file_path = make_html_docs(app_name=APP_NAME, app_version=APP_VERSION)
 
-# move `settings` file to app's dir
+print("move `settings` file to app's dir")
 shutil.move(src=build.source_subdir_path / 'settings', dst=build.app_dir_path)
+print('Done\n')
 
-# remove all `*.zip` in `docs` folder
-for file in (build.project_dir_path / 'docs').rglob('*.zip'):
+# prepare release distribution
+dist_dir_path = build.project_dir_path / 'dist'
+dist_files = f'{APP_NAME}*.zip'
+print(f'remove all `{dist_files}` in `dist` folder')
+for file in dist_dir_path.rglob(dist_files):
 	file.unlink()
-# make zip distribution in `docs` folder
-build.make_zip(file_name=APP_FOLDER, destination_dir=build.project_dir_path / 'docs')
+print('Done\n')
+print('make zip distribution in `dist` folder')
+build.make_zip(file_name=APP_FOLDER, destination_dir=dist_dir_path)
+print('Done\n')
 
-# ...and delete app folder!
+print('and delete app folder!')
 shutil.rmtree(build.app_dir_path)
+print('Done\n')
 
+print('Finished!!!')
+print(f'The distribution zip archive is in the {dist_dir_path}.')
+print('Now make release on GitHub!')

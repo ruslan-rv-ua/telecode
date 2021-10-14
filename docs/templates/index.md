@@ -16,7 +16,7 @@
 
 ## Встановлення і запуск
 
-1. Завантажте файл [`{app_name}-{app_version}.zip`](./{app_name}-{app_version}.zip). 
+1. Завантажте файл [`{app_name}-{app_version}.zip`](https://github.com/ruslan-rv-ua/telecode/releases/download/{app_version}/{app_name}-{app_version}.zip). 
 1. Розпакуйте завантажений zip-архів в обрану вами або рекомендовану викладачем теку.
 1. Перейдіть у теку з розпакованою програмою `{app_name}-{app_version}`.
 1. Запустіть файл `{app_name}.exe`.
