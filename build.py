@@ -46,4 +46,3 @@ print('Done\n')
 print('Finished!!!')
 print(f'The distribution zip archive is in the {dist_dir_path}.')
 print('Now make release on GitHub!')
-
