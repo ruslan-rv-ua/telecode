@@ -19,6 +19,10 @@ Documentation available at [telecode homepage](http://ruslan.rv.ua/telecode/).
 	poetry install
 	```
 
+1. Export requirements:
+
+	`poetry export -f requirements.txt -o requirements.txt --without-hashes`
+
 1. Build:
 
 	```

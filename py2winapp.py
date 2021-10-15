@@ -38,18 +38,19 @@ DEFAULT_PYDIST_DIR: str = "pydist"
 
 @dataclass
 class Build:
-    project_dir_path: Path
-    app_dir_path: Path
-    exe_file_path: Path
-    source_subdir_path: Path
-    python_subdir_path: Path
-    requirements_file_path: Path
+    project_path: Path
+    build_path: Path
+    exe_path: Path
+    source_path: Path
+    python_path: Path
+    requirements_path: Path
 
     def rename_exe_file(self, new_file_name: str) -> Path:
-        self.exe_file_path = self.exe_file_path.rename(
-            self.exe_file_path.with_stem(new_file_name)
-        )
-        return self.exe_file_path
+        new_exe_path = self.exe_path.with_stem(new_file_name)
+        print(f"Renaming {self.exe_path} -> {new_exe_path}")
+        self.exe_path = self.exe_path.rename(new_exe_path)
+        print("Done.\n")
+        return self.exe_path
 
     def make_zip(
         self, file_name: str, destination_dir: Union[str, Path, None] = None
@@ -57,14 +58,22 @@ class Build:
         if destination_dir is not None:
             zip_file_path = Path(destination_dir) / file_name
         else:
-            zip_file_path = self.project_dir_path / file_name
+            zip_file_path = self.project_path / file_name
+        print(f"Making zip archive {zip_file_path}")
         shutil.make_archive(
             base_name=str(zip_file_path),
             format="zip",
-            root_dir=str(self.project_dir_path),
-            base_dir=str(self.app_dir_path.relative_to(self.project_dir_path)),
+            root_dir=str(self.project_path),
+            base_dir=str(self.build_path.relative_to(self.project_path)),
         )
+        print("Done.\n")
         return zip_file_path
+
+    def remove_build_dir(self) -> None:
+        print("Removing build folder!")
+        shutil.rmtree(self.build_path)
+        self.build_path = self.source_path = self.python_path = None
+        print("Done\n")
 
 
 def execute_os_command(command: str, cwd: str = None) -> str:
@@ -468,10 +477,10 @@ def build(
     )
 
     return Build(
-        app_dir_path=app_dir_path,
-        exe_file_path=exe_file_path,
-        project_dir_path=project_path,
-        source_subdir_path=source_subdir_path,
-        python_subdir_path=python_subdir_path,
-        requirements_file_path=requirements_file_path,
+        build_path=app_dir_path,
+        exe_path=exe_file_path,
+        project_path=project_path,
+        source_path=source_subdir_path,
+        python_path=python_subdir_path,
+        requirements_path=requirements_file_path,
     )

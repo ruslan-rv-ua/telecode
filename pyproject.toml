@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "telecode"
-version = "0.1.0-rc.1"
+version = "0.1.0-rc.2"
 description = "Simple app for visually impaired students to recieve remote source code files."
 authors = ["Ruslan Iskov <ruslan.rv.ua@gmail.com>"]
 license = "MIT"
