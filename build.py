@@ -1,46 +1,26 @@
 import shutil
 
-from toml import load
+from py_to_win_app import Project
 
-import py2winapp
 from docs.make import make_html_docs
 
-project_data = load("pyproject.toml")
-APP_NAME = project_data["tool"]["poetry"]["name"]
-APP_VERSION = project_data["tool"]["poetry"]["version"]
-APP_FOLDER = f"{APP_NAME}-{APP_VERSION}"
 
-build = py2winapp.build(
-    python_version="3.9.7",
-    input_dir=f"{APP_NAME}",
-    main_file_name="main.py",
-    app_dir=APP_FOLDER,
-    source_subdir=APP_NAME,
-    show_console=False,
-)
+class TelecodeProject(Project):
+    def build(self):
+        super().build(python_version="3.9.7", pydist_dir="telecode")
+        print("Generating documentation.")
+        make_html_docs(app_name=project.name, app_version=project.version)
+        print("Done.\n")
 
-build.rename_exe_file(APP_NAME)
+        print("move `settings` file to app's dir")
+        shutil.move(src=project.source_path / "settings", dst=project.build_path)
+        print("Done\n")
 
-# generate docs
-print("Generating documentation.")
-make_html_docs(app_name=APP_NAME, app_version=APP_VERSION)
-print("Done.\n")
+if __name__ == '__main__':
+    project = TelecodeProject.from_pyproject()
+    project.build()
+    project.make_dist(delete_build_dir=True)
 
-print("move `settings` file to app's dir")
-shutil.move(src=build.source_path / "settings", dst=build.build_path)
-print("Done\n")
-
-# prepare release distribution
-dist_dir_path = build.project_path / "dist"
-dist_files = f"{APP_NAME}*.zip"
-print(f"remove all `{dist_files}` in `dist` folder")
-for file in dist_dir_path.rglob(dist_files):
-    file.unlink()
-print("Done\n")
-build.make_zip(file_name=APP_FOLDER, destination_dir=dist_dir_path)
-
-build.remove_build_dir()
-
-print("Finished!!!")
-print(f"The distribution zip archive is in the {dist_dir_path}.")
-print("Now make release on GitHub!")
+    print("Finished!!!")
+    print(f"The distribution zip archive is in the {project.dist_path}.")
+    print("Now make release on GitHub!")
